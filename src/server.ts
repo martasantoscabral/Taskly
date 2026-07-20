@@ -23,6 +23,8 @@ import authRoutes from "./routes/authRoutes.js";
 import weatherRoutes from "./routes/weatherRoute.js";
 import taskAiRoutes from "./routes/taskAiRoutes.js";
 
+import chatRoutes from "./routes/chatRoutes.js";
+
 import { specs } from "./lib/swagger.js";
 
 const app = express();
@@ -44,8 +46,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
 
+
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:4173",
   "http://127.0.0.1:5500",
   process.env.FRONTEND_URL,
 ].filter((origin): origin is string => Boolean(origin));
@@ -53,28 +57,29 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      /*
-       * Pedidos sem origin, como Swagger, Postman ou curl,
-       * também são permitidos.
-       */
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
         return;
       }
 
-      callback(new Error(`Origem não permitida pelo CORS: ${origin}`));
+      callback(new Error(`Origem bloqueada pelo CORS: ${origin}`));
     },
-
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "PATCH",
+      "OPTIONS",
+    ],
     allowedHeaders: [
       "Content-Type",
       "Authorization",
     ],
-
     credentials: true,
   }),
 );
+
 
 /*
 |--------------------------------------------------------------------------
@@ -162,6 +167,8 @@ app.use("/api/tasks", mergeRoutes);
 
 app.use("/api/merges", mergeRoutes);
 app.use("/api/weather", weatherRoutes);
+
+app.use("/api/chat", chatRoutes);
 
 /*
 |--------------------------------------------------------------------------

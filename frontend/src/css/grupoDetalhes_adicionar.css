@@ -1,0 +1,147 @@
+
+/* ======================================================
+   GESTÃO DE MEMBROS E TAREFAS
+====================================================== */
+
+.popup-gerir-membros {
+  width: min(760px, calc(100vw - 32px));
+  max-height: 86vh;
+  overflow-y: auto;
+}
+
+.texto-ajuda-popup {
+  margin: -4px 0 22px;
+  color: #8e7b6b;
+}
+
+.lista-gerir-membros {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 24px;
+}
+
+.lista-adicionar-membros {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.linha-gerir-membro {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #eee3d8;
+  border-radius: 16px;
+  background: #fffaf6;
+}
+
+.avatar-gerir-membro {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ff7417;
+  color: white;
+  font-weight: 850;
+}
+
+.dados-gerir-membro {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.dados-gerir-membro strong {
+  overflow: hidden;
+  color: #2c2119;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dados-gerir-membro span {
+  margin-top: 3px;
+  overflow: hidden;
+  color: #917c6b;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.classe-gerir-membro {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff0e3;
+  color: #d95d09;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.botao-remover-membro,
+.botao-adicionar-membro {
+  border: 0;
+  border-radius: 11px;
+  padding: 9px 12px;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.botao-remover-membro {
+  background: #dc2626;
+}
+
+.botao-adicionar-membro {
+  background: #ff7417;
+}
+
+.botao-remover-membro:disabled,
+.botao-adicionar-membro:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.acoes-lider-tarefa {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 8px;
+  padding-top: 18px;
+  border-top: 1px solid #eee3d8;
+}
+
+.botao-editar-tarefa,
+.botao-apagar-tarefa {
+  flex: 1;
+  border: 0;
+  border-radius: 13px;
+  padding: 12px 15px;
+  color: white;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.botao-editar-tarefa {
+  background: #ff7417;
+}
+
+.botao-apagar-tarefa {
+  background: #dc2626;
+}
+
+@media (max-width: 650px) {
+  .linha-gerir-membro {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .classe-gerir-membro,
+  .botao-remover-membro,
+  .botao-adicionar-membro {
+    grid-column: 2;
+    width: fit-content;
+  }
+
+  .acoes-lider-tarefa {
+    flex-direction: column;
+  }
+}

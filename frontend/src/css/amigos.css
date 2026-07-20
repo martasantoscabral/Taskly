@@ -1,38 +1,241 @@
+/* ======================================================
+   PÁGINA AMIGOS
+====================================================== */
+
 .amigos-page {
-  padding: 24px;
+  min-height: 100vh;
+  padding: 32px;
+  background: #f6f1e9;
+  color: #1f1b16;
 }
 
-.amigos-section {
-  margin-top: 24px;
+.amigos-page > h1 {
+  margin: 0 0 28px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #1f1b16;
 }
+
+
+/* ======================================================
+   SECÇÕES
+====================================================== */
+
+.amigos-section {
+  margin-top: 28px;
+}
+
+.amigos-section:first-of-type {
+  margin-top: 0;
+}
+
+.amigos-section h2 {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1f1b16;
+}
+
+
+/* ======================================================
+   PESQUISA
+====================================================== */
 
 .amigos-search {
   width: 100%;
-  max-width: 420px;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  margin-bottom: 16px;
+  max-width: 520px;
+  padding: 14px 18px;
+  border: 1.5px solid #e7ddd1;
+  border-radius: 14px;
+  outline: none;
+  background: #ffffff;
+  color: #1f1b16;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(55, 39, 24, 0.04);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
 }
+
+.amigos-search::placeholder {
+  color: #ad9b8c;
+  font-weight: 500;
+}
+
+.amigos-search:focus {
+  border-color: #ff7417;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 116, 23, 0.1);
+}
+
+
+/* ======================================================
+   LISTA DE AMIGOS
+====================================================== */
 
 .amigos-list {
   display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 18px;
+  margin-top: 18px;
 }
 
+
+/* ======================================================
+   CARTÃO DE UTILIZADOR
+====================================================== */
+
 .amigo-card {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+  padding: 22px;
+  border: 1px solid #ece3d8;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(56, 40, 25, 0.06);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.amigo-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffd2b2;
+  box-shadow: 0 14px 30px rgba(56, 40, 25, 0.1);
+}
+
+.amigo-card::before {
+  content: "";
+  width: 42px;
+  height: 4px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: #ff7417;
 }
 
 .amigo-card h3 {
-  margin: 0 0 6px;
+  margin: 0 0 7px;
+  color: #1f1b16;
+  font-size: 19px;
+  font-weight: 800;
 }
 
 .amigo-card p {
-  margin: 4px 0;
+  margin: 3px 0;
+  color: #887668;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.amigo-card p:first-of-type {
+  color: #e9630c;
+  font-weight: 700;
 }
 
 
+/* ======================================================
+   BOTÕES
+====================================================== */
+
+.amigo-card button {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 13px;
+  background: #ff7417;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 116, 23, 0.22);
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.amigo-card button:hover {
+  background: #e9660e;
+  transform: translateY(-2px);
+  box-shadow: 0 11px 22px rgba(255, 116, 23, 0.28);
+}
+
+.amigo-card button:active {
+  transform: scale(0.98);
+}
+
+
+/* ======================================================
+   ESTADO VAZIO
+====================================================== */
+
+.amigos-section > p {
+  margin-top: 12px;
+  padding: 22px;
+  border: 1px dashed #ddcfc1;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+  color: #8c7969;
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   ERRO
+====================================================== */
+
+.amigos-error {
+  margin-bottom: 18px;
+  padding: 12px 15px;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+
+@media (max-width: 720px) {
+  .amigos-page {
+    padding: 18px;
+  }
+
+  .amigos-page > h1 {
+    font-size: 30px;
+  }
+
+  .amigos-section h2 {
+    font-size: 20px;
+  }
+
+  .amigos-list {
+    grid-template-columns: 1fr;
+  }
+
+  .amigo-card {
+    min-height: 175px;
+    padding: 18px;
+    border-radius: 17px;
+  }
+
+  .amigos-search {
+    max-width: none;
+  }
+
+  .amigo-card button {
+    width: 100%;
+    align-self: stretch;
+  }
+}

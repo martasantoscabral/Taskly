@@ -19,7 +19,7 @@ body::before {
   width: 100%;
   height: 100%;
 
-  background: url('/fundo-login.png') no-repeat center center!important;
+  background: url('/Taskly/fundo-login.png') no-repeat center center!important;
   background-size: cover!important;
   background-position: center!important;
   background-attachment: fixed!important;
@@ -162,26 +162,67 @@ body::before {
   border-left: 1px solid #f0e8de;
 }
  
-/* ---- form --- */
-form {
+
+
+
+
+.auth-container {
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
+}
+
+.auth-tabs {
+  display: flex;
+  background: #faf6f1;
+  border: 1px solid #ede5d8;
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.auth-tab {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  background: transparent;
+  color: #8a7a6a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none;
+  margin: 0;
+}
+
+.auth-tab:hover {
+  background: #f5ece2;
+  color: #1f1b16;
+  transform: none;
+  box-shadow: none;
+}
+
+.auth-tab.ativo {
+  background: #ffffff;
+  color: #f97316;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cartao-login form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
- 
-/* TÍTULO */
-form h1 {
+
+.cartao-login form h1 {
   text-align: center;
   font-size: 26px;
   font-weight: 800;
   color: #1f1b16;
   margin-bottom: 8px;
 }
- 
-/* INPUTS */
-input {
+
+.cartao-login form input {
   width: 100%;
   padding: 14px 18px;
   border-radius: 14px;
@@ -190,16 +231,23 @@ input {
   font-size: 14px;
   font-weight: 600;
   color: #1f1b16;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
- 
-input::placeholder {
+
+.cartao-login form input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+.cartao-login form input::placeholder {
   color: #b8a898;
   font-weight: 500;
 }
- 
- 
-/* BOTÃO */
-button {
+
+.auth-submit {
   margin-top: 4px;
   padding: 15px;
   border: none;
@@ -210,18 +258,60 @@ button {
   font-weight: 800;
   cursor: pointer;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
-
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
- 
-button:hover {
+
+.auth-submit:hover:not(:disabled) {
   background: #ea6c0a;
   transform: translateY(-2px);
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+}
 
+.auth-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
- 
-button:active {
-  transform: scale(0.98) translateY(0);
-  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+
+.auth-error {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 600;
 }
- 
+
+.auth-success {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.trocar-modo {
+  margin-top: 18px;
+  text-align: center;
+  color: #8a7a6a;
+  font-size: 13px;
+}
+
+.trocar-modo button {
+  border: none;
+  background: transparent;
+  color: #f97316;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 4px 6px;
+  box-shadow: none;
+}
+
+.trocar-modo button:hover {
+  color: #ea6c0a;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}

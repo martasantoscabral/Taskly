@@ -37,7 +37,9 @@ model Utilizador {
   reportsFeitos    Report[]     @relation("ReportadoPor")
   tasks            Task[]
   aiResponses      AiResponse[]
-  conversasUser2 Conversas[]
+  conversasUser2   Conversas[]
+
+  mensagensGrupo MensagemGrupo[]
 
   @@map("utilizadores")
 }
@@ -57,8 +59,8 @@ model Task {
   subTasks        SubTask[]
   aiResponses     AiResponse[]
 
-  pdfPath         String?
-  pdfName         String?
+  pdfPath String?
+  pdfName String?
 
   user Utilizador @relation(fields: [id_user], references: [id_utilizador])
 
@@ -111,15 +113,6 @@ model Conversas {
   msg_history String
   user2       Utilizador @relation(fields: [user2_id], references: [id_utilizador])
   updated_At  DateTime   @updatedAt
-}
-
-model ChatGroup {
-  grupo_id         Int      @id
-  grupo            Grupo    @relation(fields: [grupo_id], references: [grupo_id])
-  chat_msg_history String[]
-  user_msg         Int[]
-  updatedAt        DateTime @updatedAt
-  history_chat     String[]
 }
 
 model Desafio {
@@ -208,12 +201,13 @@ model MergeFicheiro {
 }
 
 model Grupo {
-  grupo_id Int               @id @default(autoincrement())
+  grupo_id Int      @id @default(autoincrement())
   nome     String
-  criadoEm DateTime          @default(now())
-  membros  UtilizadorGrupo[]
-  chat     ChatGroup?
-  tasks Task[]
+  criadoEm DateTime @default(now())
+
+  membros   UtilizadorGrupo[]
+  tasks     Task[]
+  mensagens MensagemGrupo[]
 }
 
 model UtilizadorGrupo {
@@ -313,4 +307,20 @@ enum FeedTipo {
   TAREFA_PARTILHADA
   DESAFIO_CONCLUIDO
   BADGE_RECEBIDO
+}
+
+model MensagemGrupo {
+  id_mensagem Int      @id @default(autoincrement())
+  texto       String
+  criadaEm    DateTime @default(now())
+
+  grupo_id Int
+  user_id  Int
+
+  grupo      Grupo      @relation(fields: [grupo_id], references: [grupo_id], onDelete: Cascade)
+  utilizador Utilizador @relation(fields: [user_id], references: [id_utilizador], onDelete: Cascade)
+
+  @@index([grupo_id])
+  @@index([user_id])
+  @@map("mensagens_grupo")
 }

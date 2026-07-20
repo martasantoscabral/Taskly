@@ -104,21 +104,34 @@ function Amigos() {
 
         {pesquisa.trim() !== "" && (
           <div className="amigos-list">
-            {usersFiltrados.map((user) => (
-              <div className="amigo-card" key={user.id_utilizador}>
-                <h3>{user.nome}</h3>
-                <p>@{user.handle}</p>
-                <p>{user.email}</p>
+            {usersFiltrados.length === 0 ? (
+              <p className="amigos-vazio"> Nenhum utilizador encontrado.</p>
+            ) : (
+              usersFiltrados.map((user) => (
+                <div className="amigo-card" key={user.id_utilizador}>
+                  <h3>{user.nome}</h3>
+                  <p>@{user.handle}</p>
+                  <p>{user.email}</p>
 
-                {idsSeguindo.includes(user.id_utilizador) ? (
-                  <button onClick={() => deixarDeSeguir(user.id_utilizador)}> Deixar de seguir</button>
-                ) : (
-                  <button onClick={() => seguirUser(user.id_utilizador)}> Seguir </button>
-                )}
-              </div>
-            ))}
+                  {idsSeguindo.includes(user.id_utilizador) ? (
+                    <button
+                      onClick={() =>
+                        deixarDeSeguir(user.id_utilizador)
+                      }
+                    > Deixar de seguir
+                    </button>
+                  ) : (
+                    <button onClick={() => seguirUser(user.id_utilizador)}>Seguir </button>
+                  )}
+                </div>
+              ))
+            )}
           </div>
-        )}
+        )}         
+          
+
+
+
       </section>
 
 

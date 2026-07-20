@@ -1,20 +1,51 @@
 import { type Request, type Response } from 'express';
 import * as groupService from '../services/groupService.js';
+import type { AuthenticatedRequest } from "../middlewares/authGuard.js";
 import {groupCreateSchema, groupUserCreateSchema, groupDeleteSchema,} from '../schemas/groupSchema.js';
 
 
-export const createGroupController = async (req: Request, res: Response) => {
+
+
+export const createGroupController = async (
+  req: AuthenticatedRequest,
+  res: Response,
+) => {
   const result = groupCreateSchema.safeParse(req.body);
 
   if (!result.success) {
-    return res.status(400).json({ errors: result.error.issues });
+    return res.status(400).json({
+      errors: result.error.issues.map((issue) => ({
+        campo: issue.path.join("."),
+        mensagem: issue.message,
+      })),
+    });
   }
 
   try {
-    const createGroup = await groupService.createGroup(result.data.nome);
-    return res.status(201).json(createGroup);
+    const utilizadorId = req.utilizador?.id_utilizador;
+
+    if (!utilizadorId) {
+      return res.status(401).json({
+        error: "Utilizador não autenticado.",
+      });
+    }
+
+    const resultado = await groupService.createGroupWithLeader(
+      result.data.nome,
+      utilizadorId,
+    );
+
+    return res.status(201).json({
+      message: "Grupo criado com sucesso.",
+      grupo: resultado.grupo,
+      membro: resultado.membro,
+    });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao criar grupo" });
+    console.error("Erro ao criar grupo:", error);
+
+    return res.status(500).json({
+      error: "Erro ao criar grupo.",
+    });
   }
 };
 

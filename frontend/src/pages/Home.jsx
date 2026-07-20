@@ -371,8 +371,8 @@ function Tasks({ user, onLogout }) {
     <div className="pagina">
       <aside className="menu-lateral">
         <div className="logo">
-          <img src="/taskly-icon-48.png" alt="logo" className="icon-logo" />
-          <img src="/logo.png" alt="logo" className="imagem-logo" />
+          <img src={`${import.meta.env.BASE_URL}taskly-icon-48.png`} alt="logo" className="icon-logo" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="logo" className="imagem-logo" />
         </div>
 
         <p className="titulo-menu">Menu</p>
@@ -635,7 +635,6 @@ function Tasks({ user, onLogout }) {
                 </button>
               )}
 
-              <button className="botao-ia" onClick={gerarSubtarefasIA}>✦ IA vai sugerir subtarefas...</button>
               <button className="botao-add" onClick={criarTarefa}>Add</button>
 
             </div>  

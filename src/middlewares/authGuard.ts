@@ -1,15 +1,22 @@
-import { type Request, type Response, type NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import {
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
+
+import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET não definido nas variáveis de ambiente.');
+  throw new Error(
+    "JWT_SECRET não definido nas variáveis de ambiente.",
+  );
 }
 
 export interface JwtPayload {
   id_utilizador: number;
-  role?: 'USER' | 'ADMIN';
+  role?: "USER" | "ADMIN";
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -23,21 +30,26 @@ export const authGuard = (
 ) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith("Bearer ")) {
     return res.status(401).json({
-      error: 'Acesso negado. Token em falta.',
+      error: "Acesso negado. Token em falta.",
     });
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    const decoded = jwt.verify(
+      token,
+      JWT_SECRET,
+    ) as JwtPayload;
+
     req.utilizador = decoded;
+
     return next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({
-      error: 'Token inválido ou expirado.',
+      error: "Token inválido ou expirado.",
     });
   }
 };

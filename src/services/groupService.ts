@@ -46,3 +46,28 @@ export const getAllUserInGroup = async (grupo_id: number) => {
 
 
 
+export async function createGroupWithLeader(
+  nome: string,
+  utilizadorId: number,
+) {
+  return prisma.$transaction(async (tx) => {
+    const grupo = await tx.grupo.create({
+      data: {
+        nome,
+      },
+    });
+
+    const membro = await tx.utilizadorGrupo.create({
+      data: {
+        gr_id: grupo.grupo_id,
+        ut_id: utilizadorId,
+        classe: "LIDER",
+      },
+    });
+
+    return {
+      grupo,
+      membro,
+    };
+  });
+}

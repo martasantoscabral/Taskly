@@ -47,11 +47,6 @@ app.use(helmet());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5500",
-
-  // Coloca aqui o endereço do GitHub Pages:
-  "https://TEU-UTILIZADOR.github.io",
-
-  // Ou lê o endereço guardado no Render:
   process.env.FRONTEND_URL,
 ].filter((origin): origin is string => Boolean(origin));
 

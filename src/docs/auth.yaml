@@ -1,0 +1,50 @@
+paths:
+  /api/auth/register:
+    post:
+      tags: [Auth]
+      summary: Regista um novo utilizador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nome, email, handle, password]
+              properties:
+                nome:
+                  type: string
+                  example: Joana Silva
+                email:
+                  type: string
+                  format: email
+                handle:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: Utilizador criado
+        400:
+          description: Erro de validação
+
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Faz login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Credenciais inválidas

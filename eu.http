@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Ana Admin",
+  "email": "ana.admin@taskly.pt",
+  "handle": "ana_admin",
+  "password": "123456",
+  "role": "ADMIN"
+}

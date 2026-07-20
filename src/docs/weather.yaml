@@ -1,0 +1,46 @@
+paths:
+  /api/weather/{city}:
+    get:
+      tags:
+        - Weather
+      summary: "Obter clima por cidade"
+      description: "Retorna a temperatura atual de uma cidade"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: city
+          required: true
+          schema:
+            type: string
+          description: "Nome da cidade, por exemplo Lisbon"
+      responses:
+        "200":
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  city:
+                    type: string
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  current:
+                    type: object
+                    properties:
+                      time:
+                        type: string
+                        example: "2026-05-01T00:00"
+                      temperature:
+                        type: number
+                        example: 14.4
+                      unit:
+                        type: string
+                        example: "°C"
+        "401":
+          description: "Não autenticado"
+        "500":
+          description: "Erro ao obter clima"

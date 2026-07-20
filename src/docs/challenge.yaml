@@ -1,0 +1,364 @@
+paths:
+  /api/challenges:
+    get:
+      tags: [Challenges]
+      summary: Retorna a lista de todos os desafios
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: publicado
+          schema:
+            type: boolean
+          description: Filtrar desafios publicados ou rascunhos
+        - in: query
+          name: concluido
+          schema:
+            type: boolean
+          description: Filtrar desafios concluídos
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Não autenticado
+        500:
+          description: Erro ao listar desafios
+
+    post:
+      tags: [Challenges]
+      summary: Cria um novo desafio
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [titulo, data_inicio, data_fim, badge, notificar]
+              properties:
+                titulo:
+                  type: string
+                  example: Ler 30 minutos por dia
+                data_inicio:
+                  type: string
+                  format: date-time
+                  example: "2026-04-20T00:00:00.000Z"
+                data_fim:
+                  type: string
+                  format: date-time
+                  example: "2026-04-30T00:00:00.000Z"
+                badge:
+                  type: string
+                  example: Read master
+                notificar:
+                  type: boolean
+                  example: true
+                publicado:
+                  type: boolean
+                  description: Se false, fica como rascunho
+                  example: false
+                concluido:
+                  type: boolean
+                  example: false
+      responses:
+        201:
+          description: Desafio criado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+
+  /api/challenges/{id}:
+    get:
+      tags: [Challenges]
+      summary: Retorna um desafio pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do desafio
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        404:
+          description: Desafio não encontrado
+
+    put:
+      tags: [Challenges]
+      summary: Atualiza um desafio existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do desafio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                  example: Desafio de Backend atualizado
+                data_inicio:
+                  type: string
+                  format: date-time
+                  example: "2026-04-20T00:00:00.000Z"
+                data_fim:
+                  type: string
+                  format: date-time
+                  example: "2026-05-01T00:00:00.000Z"
+                badge:
+                  type: string
+                  example: Backend Master
+                notificar:
+                  type: boolean
+                  example: true
+                publicado:
+                  type: boolean
+                  example: true
+                concluido:
+                  type: boolean
+                  example: false
+      responses:
+        200:
+          description: Desafio atualizado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Desafio não encontrado
+
+    delete:
+      tags: [Challenges]
+      summary: Elimina um desafio existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do desafio
+      responses:
+        204:
+          description: Desafio eliminado
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Desafio não encontrado
+
+  /api/challenges/{id}/join:
+    post:
+      tags: [Challenges]
+      summary: Utilizador junta-se a um desafio
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        201:
+          description: Participação criada
+        400:
+          description: Não foi possível aderir
+        401:
+          description: Não autenticado
+
+  /api/challenges/{id}/leave:
+    delete:
+      tags: [Challenges]
+      summary: Utilizador sai de um desafio
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Saiu do desafio
+        401:
+          description: Não autenticado
+        404:
+          description: Participação não encontrada
+
+  /api/challenges/{id}/participants:
+    get:
+      tags: [Challenges]
+      summary: Retorna os participantes de um desafio
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de participantes
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        500:
+          description: Erro ao listar participantes
+
+  /api/challenges/{id}/progress:
+    put:
+      tags: [Challenges]
+      summary: Atualiza o progresso do utilizador no desafio
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [concluido]
+              properties:
+                concluido:
+                  type: boolean
+                  example: true
+      responses:
+        200:
+          description: Progresso atualizado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        404:
+          description: Participação não encontrada
+
+  /api/challenges/{id}/publish:
+    put:
+      tags: [Challenges]
+      summary: Publica um desafio
+      description: Torna um desafio visível para os utilizadores.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Desafio publicado
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        400:
+          description: Erro ao publicar desafio
+
+  /api/challenges/{id}/unpublish:
+    put:
+      tags: [Challenges]
+      summary: Volta um desafio para rascunho
+      description: Remove o desafio da lista pública.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Desafio voltou a rascunho
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        400:
+          description: Erro ao despublicar desafio
+
+  /api/challenges/{id}/complete:
+    put:
+      tags: [Challenges]
+      summary: Conclui um desafio
+      description: Força a conclusão de um desafio ativo.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Desafio concluído
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        400:
+          description: Erro ao concluir desafio
+
+  /api/challenges/{id}/participants/{userId}/complete:
+    put:
+      tags: [Challenges]
+      summary: Marca um participante como concluído
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do desafio
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador participante
+      responses:
+        200:
+          description: Participante marcado como concluído
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        400:
+          description: Erro ao concluir participante

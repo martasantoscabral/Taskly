@@ -1,0 +1,147 @@
+### Criar user1
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Lindai",
+  "email": "lindatos@test.com",
+  "handle": "lindainho",
+  "password": "123456"
+}
+
+### Criar user2
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Rui",
+  "email": "ruii@test.com",
+  "handle": "ruuii",
+  "password": "1111"
+}
+###Criar user3
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Larissa",
+  "email": "Lari@test.com",
+  "handle": "lariii",
+  "password": "larissa123"
+}
+
+###notificacao
+POST http://localhost:3000/api/notifications
+Content-Type: application/json
+
+{
+  "id_user": 1,
+  "tipo": "info",
+  "mensagem": "Teste de notificação"
+}
+
+###challenge
+POST http://localhost:3000/api/challenges
+Content-Type: application/json
+
+{
+  "id_admin": 1,
+  "titulo": "Desafio Teste",
+  "data_inicio": "2025-01-01",
+  "data_fim": "2025-01-10",
+  "badge": "gold",
+  "notificar": true
+}
+###criar tarefa
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Implementar login",
+  "description": "Criar autenticação com JWT",
+  "priority": "MEDIA",
+  "status": "TODO",
+  "dueDate": "2026-05-01T12:00:00.000Z",
+  "id_user": 6
+}
+###report
+POST http://localhost:3000/api/reports
+Content-Type: application/json
+
+{
+  "id_reportado_por": 1,
+  "id_reportado": 2,
+  "tipo": "spam",
+  "status": "pendente",
+  "relevancia": "alta"
+}
+
+
+
+###submission
+POST http://localhost:3000/api/tasks/1/submissions
+Content-Type: application/json  
+
+{
+  "id_user": 1,
+  "nome": "Marta",
+  "nome_ficheiro": "utils.py",
+  "file_path": "/uploads/utils.py",
+  "mensagem_commit": "Primeira versão"
+}
+
+###criar conflict
+POST http://localhost:3000/api/conflicts
+Content-Type: application/json
+
+{
+  "id_tarefa": 1,
+  "nome_ficheiro": "utils.py",
+  "id_user": 1,
+  "mensagem_commit": "Conflito inicial",
+  "status": "pendente"
+}
+
+###listar conflitos de uma tarefa
+GET http://localhost:3000/api/conflicts/tarefa/1
+
+###resolver conflito
+PUT http://localhost:3000/api/conflicts/1/resolve
+Content-Type: application/json
+
+{
+  "id_versao_escolhida": 3,
+  "status": "resolved"
+}
+
+
+
+###merge
+POST http://localhost:3000/api/tasks/1/merge
+Content-Type: application/json
+
+{
+  "criado_por": 1,
+  "tamanho": "2MB",
+  "ficheiros_incluidos": "utils.py,auth.py,server.ts"
+}
+
+
+###Tentativa de login do user 1
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ana.admin@taskly.pt",
+  "password": "123456"
+}
+
+###
+DELETE http://localhost:3000/api/users/1
+
+###
+GET http://localhost:3000/api/users/1
+
+###
+GET http://localhost:3000/api/weather/Lisbon
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXphZG9yIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3Nzc2NjM1OTYsImV4cCI6MTc3NzY2NzE5Nn0.W_Gu2qNp7HaeiTxHW8VfA5FaVT9UxC7IzHiE_37AObw

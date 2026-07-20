@@ -1,0 +1,78 @@
+.pagina-chat-mensagens {
+  padding: 24px;
+}
+
+.topo-chat-grupo {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.topo-chat-grupo button {
+  border: none;
+  background: #ff7a00;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.chat-box-grande {
+  background: white;
+  border-radius: 22px;
+  padding: 20px;
+  height: 65vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mensagem {
+  background: #f4f1ec;
+  padding: 14px;
+  border-radius: 16px;
+  max-width: 60%;
+}
+
+.minha {
+  align-self: flex-end;
+  background: #d7f3dd;
+}
+
+.mensagem strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.enviar-chat-box {
+  margin-top: 20px;
+  display: flex;
+  gap: 14px;
+}
+
+.enviar-chat-box input {
+  flex: 1;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+}
+
+.enviar-chat-box button {
+  border: none;
+  background: #ff7a00;
+  color: white;
+  padding: 0 24px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sem-mensagens {
+  color: #777;
+}

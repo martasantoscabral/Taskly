@@ -1,0 +1,83 @@
+##Criar .env:##
+1. criar o ficheiro
+    nano .env
+2. conteudo:
+    DATABASE_URL="postgresql://taskly_user:1234@localhost:5432/taskly_db"
+    JWT_SECRET=123456
+
+##Instalar dependencias##
+1. express
+    npm install express dotenv
+2.node_modules  
+    npm install -D typescript tsx @types/node @types/express
+3.prisma
+    npm install prisma@6 @prisma/client@7
+4. adapter
+    npm install @prisma/adapter-pg pg
+5. zod
+    npm install zod swagger-ui-express swagger-jsdoc
+6. swagger
+    npm install -D @types/swagger-ui-express @types/swagger-jsdoc
+7. helmet
+    npm install helmet cors express-rate-limit jsonwebtoken bcryptjs
+8.
+    npm install -D @types/jsonwebtoken @types/bcryptjs
+
+
+frontend-react
+    cd frontend
+    npm install
+    npm run dev
+
+----> ver Taskly Web
+    http://localhost:5173
+
+----> ver swagger
+    http://localhost:3000/api-docs
+
+npx tsx prisma/seed.ts
+
+##DEPOIS##
+Confirmar:
+    node -v
+    npm -v
+    npx prisma -v
+
+
+##Depois de mudar o src fazer:##
+1. Fazer migrate
+    npx prisma migrate dev --name nome_da_mudanca
+    OU 
+    npx prisma migrate dev
+2. Gerar o prisma client
+    npx prisma generate
+3.Correr o servidor
+    npx tsx watch src/server.ts
+    npm run dev
+
+
+Base de Dados
+prisma:
+
+1. entrar
+    sudo -u postgres psql
+    \c taskly_db
+
+- ver bases de Dados
+    \l
+    \q (para sair)
+- ver tabelas
+    \dt
+
+-Ver tabela utilizadores
+    SELECT * FROM utilizadores;
+    
+- sair 
+    \q
+
+
+
+
+PDF-MERGE
+npm install pdf-lib multer
+npm install -D @types/multer

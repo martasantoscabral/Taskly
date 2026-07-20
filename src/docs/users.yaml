@@ -1,0 +1,170 @@
+paths:
+  /api/users:
+    get:
+      tags: [Users]
+      summary: Retorna a lista de todos os utilizadores
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+
+    post:
+          tags: [Users]
+          summary: Cria um novo utilizador
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required: [nome, email, handle, password]
+                  properties:
+                    nome:
+                      type: string
+                      minLength: 3
+                      pattern: "^[A-Za-zÀ-ÿ ]+$"
+                      example: Joana Silva
+                      description: Apenas letras e espaços
+
+                    email:
+                      type: string
+                      format: email
+                      example: joanaa@test.com
+                      description: Email válido
+
+                    handle:
+                      type: string
+                      minLength: 3
+                      pattern: "^[A-Za-z0-9._|]+$"
+                      example: joaninha_01
+                      description: Pode conter letras, números, ponto, underscore e barra vertical
+
+                    password:
+                      type: string
+                      minLength: 4
+                      example: 123456
+
+                    role:
+                      type: string
+                      enum: [USER, ADMIN]
+                      example: ADMIN
+                      description: Tipo de utilizador
+          responses:
+            201:
+              description: Utilizador criado
+
+            400:
+              description: Erro de validação
+
+
+
+
+
+  /api/users/{id}:
+    get:
+      tags: [Users]
+      summary: Retorna um utilizador pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Utilizador não encontrado
+
+    put:
+      tags: [Users]
+      summary: Atualiza um utilizador existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  minLength: 3
+                  pattern: "^[A-Za-zÀ-ÿ ]+$"
+                  example: Joana Atualizada
+                email:
+                  type: string
+                  format: email
+                  example: joanaatualizada@test.com
+                handle:
+                  type: string
+                  minLength: 3
+                  pattern: "^[A-Za-z0-9._|]+$"
+                  example: joaninha_2
+                password:
+                  type: string
+                  minLength: 4
+                  example: 12345678
+                suspenso:
+                  type: boolean
+                  example: false
+                role:
+                  type: string
+                  enum: [USER, ADMIN]
+      responses:
+        200:
+          description: Utilizador atualizado
+        400:
+          description: Erro de validação
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Utilizador não encontrado
+
+    delete:
+      tags: [Users]
+      summary: Remove um utilizador existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador
+      responses:
+        204:
+          description: Utilizador removido
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Utilizador não encontrado

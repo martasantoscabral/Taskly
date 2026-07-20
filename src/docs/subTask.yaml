@@ -1,0 +1,161 @@
+paths:
+  /api/tasks/{id}/subtasks:
+    get:
+      tags: [SubTasks]
+      summary: Lista subtarefas de uma task
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+
+    post:
+      tags: [SubTasks]
+      summary: Cria uma subtarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [titulo]
+              properties:
+                titulo:
+                  type: string
+                  example: Fazer login
+                concluida:
+                  type: boolean
+                  example: false
+      responses:
+        201:
+          description: SubTask criada
+        400:
+          description: Erro de validação
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+
+  /api/tasks/{id}/subtasks/{subtaskId}:
+    get:
+      tags: [SubTasks]
+      summary: Obtém uma subtarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+        - in: path
+          name: subtaskId
+          required: true
+          schema:
+            type: integer
+          description: ID da subtarefa
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa ou SubTask não encontrada
+
+    put:
+      tags: [SubTasks]
+      summary: Atualiza uma subtarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+        - in: path
+          name: subtaskId
+          required: true
+          schema:
+            type: integer
+          description: ID da subtarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                  example: Atualizar login
+                concluida:
+                  type: boolean
+                  example: true
+      responses:
+        200:
+          description: Atualizada
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa ou SubTask não encontrada
+
+    delete:
+      tags: [SubTasks]
+      summary: Remove uma subtarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+        - in: path
+          name: subtaskId
+          required: true
+          schema:
+            type: integer
+          description: ID da subtarefa
+      responses:
+        204:
+          description: Removida
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa ou SubTask não encontrada

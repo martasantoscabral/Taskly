@@ -1,0 +1,137 @@
+###criar admin
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Ana Admin",
+  "email": "ana.admin@taskly.pt",
+  "handle": "ana_admin",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+###user1
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "email": "joao@taskly.pt",
+  "handle": "joao_silva",
+  "password": "123456",
+  "role": "USER"
+}
+
+
+###user2
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Maria Costa",
+  "email": "maria@taskly.pt",
+  "handle": "maria_costa",
+  "password": "123456",
+  "role": "USER"
+}
+
+
+
+###user3
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "nome": "Pedro Rocha",
+  "email": "pedro@taskly.pt",
+  "handle": "pedro_rocha",
+  "password": "123456",
+  "role": "USER"
+}
+
+
+
+###login admin
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ana.admin@taskly.pt",
+  "password": "123456"
+}
+
+
+###ciar tarefa1
+POST http://localhost:3000/api/tasks
+Authorization: Bearer TOKEN
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91dGlsaXphZG9yIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3Nzg2MDAwNjcsImV4cCI6MTc3ODYwMzY2N30.hp1ecl5Rx4T7t6qV2WnpzUXbtPwOXfKsZbicjYbGM2s
+
+{
+  "title": "Implementar autenticação JWT",
+  "description": "Criar login e middleware authGuard",
+  "priority": "URGENTE",
+  "status": "TODO"
+}
+
+###ciar tarefa2
+POST http://localhost:3000/api/tasks
+Authorization: Bearer TOKEN
+Content-Type: application/json
+
+{
+  "title": "Criar frontend React",
+  "description": "Desenvolver interface principal",
+  "priority": "ALTA",
+  "status": "DOING"
+}
+
+
+###Criar tarefa com subtasks
+POST http://localhost:3000/api/tasks
+Authorization: Bearer TOKEN
+Content-Type: application/json
+
+{
+  "title": "Preparar apresentação",
+  "description": "Slides finais do projeto",
+  "priority": "MEDIA",
+  "status": "TODO",
+  "subTasks": [
+    {
+      "titulo": "Criar slides",
+      "concluida": false
+    },
+    {
+      "titulo": "Adicionar mockups",
+      "concluida": false
+    }
+  ]
+}
+
+
+###reports
+POST http://localhost:3000/api/reports
+Authorization: Bearer TOKEN
+Content-Type: application/json
+
+{
+  "id_reportado": 3,
+  "tipo": "spam",
+  "status": "PENDENTE",
+  "relevancia": "MEDIA"
+}
+
+
+###Criar report com tarefa associada
+POST http://localhost:3000/api/reports
+Authorization: Bearer TOKEN
+Content-Type: application/json
+
+{
+  "id_reportado": 2,
+  "id_tarefa": 1,
+  "tipo": "conteudo_inadequado",
+  "status": "PENDENTE",
+  "relevancia": "ALTA"
+}

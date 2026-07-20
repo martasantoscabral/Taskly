@@ -1,0 +1,160 @@
+paths:
+  /api/tasks/{id}/merge:
+    get:
+      tags: [Merges]
+      summary: Retorna o merge final mais recente de uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID da tarefa inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Merge não encontrado
+
+    post:
+      tags: [Merges]
+      summary: Cria um novo merge final para uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tamanho, ficheiros_incluidos]
+              properties:
+                tamanho:
+                  type: string
+                  example: 3MB
+                ficheiros_incluidos:
+                  type: string
+                  example: nes.py, login.py, server.ts
+      responses:
+        201:
+          description: Merge criado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+
+  /api/tasks/{id}/merge/download:
+    get:
+      tags: [Merges]
+      summary: Descarrega o merge final de uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Download disponível
+        400:
+          description: ID da tarefa inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Merge não encontrado
+
+  /api/tasks/{id}/merges:
+    get:
+      tags: [Merges]
+      summary: Retorna todos os merges de uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID da tarefa inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        500:
+          description: Erro ao listar merges da tarefa
+
+  /api/merges/{id}:
+    get:
+      tags: [Merges]
+      summary: Retorna um merge específico pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do merge
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID do merge inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Merge não encontrado
+
+    delete:
+      tags: [Merges]
+      summary: Remove um merge específico pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do merge
+      responses:
+        204:
+          description: Merge removido
+        400:
+          description: ID do merge inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Merge não encontrado

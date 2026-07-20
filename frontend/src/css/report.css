@@ -1,0 +1,45 @@
+.reports-page {
+  padding: 24px;
+}
+
+.reports-page h1 {
+  margin-bottom: 4px;
+}
+
+
+.reports-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.report-card {
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  padding: 16px;
+  background: white;
+}
+
+.report-card h3 {
+  margin-top: 0;
+}
+
+.report-card p {
+  margin: 6px 0;
+}
+
+.report-task {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #8d8989;
+}
+
+.report-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+

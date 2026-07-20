@@ -1,0 +1,90 @@
+paths:
+  /api/users/{id}/followers:
+    get:
+      tags: [Followers]
+      summary: Lista os seguidores de um utilizador
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+
+  /api/users/{id}/following:
+    get:
+      tags: [Followers]
+      summary: Lista os utilizadores seguidos por um utilizador
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do utilizador
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+
+  /api/users/follow:
+    post:
+      tags: [Followers]
+      summary: Seguir um utilizador
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [seguidor_id, seguido_id]
+              properties:
+                seguidor_id:
+                  type: integer
+                  example: 1
+                seguido_id:
+                  type: integer
+                  example: 2
+      responses:
+        201:
+          description: Seguidor adicionado
+        400:
+          description: Dados inválidos
+
+  /api/users/unfollow:
+    delete:
+      tags: [Followers]
+      summary: Deixar de seguir um utilizador
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [seguidor_id, seguido_id]
+              properties:
+                seguidor_id:
+                  type: integer
+                  example: 1
+                seguido_id:
+                  type: integer
+                  example: 2
+      responses:
+        204:
+          description: Relação removida
+        404:
+          description: Relação não encontrada

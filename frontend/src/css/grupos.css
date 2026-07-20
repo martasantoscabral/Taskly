@@ -1,0 +1,584 @@
+.pagina-grupos {
+  min-height: 100vh;
+  background: #f6f0e8;
+  padding: 32px;
+}
+
+/* ========================================================= */
+/* LISTA DE GRUPOS */
+/* ========================================================= */
+
+.cartao-topo {
+  background: white;
+  border-radius: 28px;
+  padding: 22px 28px;
+  margin-bottom: 26px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.linha-data {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.etiqueta-hoje {
+  background: #ffb06b;
+  color: #7a3200;
+  font-weight: 800;
+  padding: 12px 18px;
+  border-radius: 18px;
+  font-size: 20px;
+}
+
+.cabecalho-grupos {
+  margin-bottom: 28px;
+}
+
+.cabecalho-grupos h1 {
+  font-size: 54px;
+  margin: 0;
+  color: #1d140d;
+  font-family: Georgia, serif;
+}
+
+.cabecalho-grupos p {
+  color: #998b7a;
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+.erro-grupos {
+  color: red;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.grupo-formulario {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.grupo-formulario input {
+  flex: 1;
+  border: none;
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  font-size: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+}
+
+.grupo-formulario button {
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 16px 22px;
+  border-radius: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 122, 26, 0.25);
+}
+
+.grelha-grupos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.cartao-grupo {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.cartao-grupo:hover {
+  transform: translateY(-4px);
+}
+
+.topo-cartao-grupo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.topo-cartao-grupo h3 {
+  margin: 0;
+  font-size: 28px;
+  color: #1d140d;
+}
+
+.descricao-grupo {
+  color: #9a8b7a;
+  margin-top: 6px;
+}
+
+.badge-grupo {
+  background: #fff0e5;
+  color: #c85b12;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.info-grupo {
+  color: #9c8d7d;
+  margin-bottom: 22px;
+}
+
+.acoes-grupo {
+  display: flex;
+  gap: 12px;
+}
+
+.acoes-grupo button {
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.estado-vazio-grupos {
+  background: white;
+  border-radius: 28px;
+  padding: 60px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.icone-vazio {
+  font-size: 50px;
+  margin-bottom: 14px;
+}
+
+/* ========================================================= */
+/* DETALHE DO GRUPO */
+/* ========================================================= */
+
+.grupo-layout-racunho {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.grupo-topo-racunho {
+  background: white;
+  border-radius: 28px;
+  padding: 10px 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.lado-esquerdo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.badge-grupo {
+  margin-top: 0;
+  justify-self: end;
+  align-self: start;
+  background: #fff0e5;
+  color: #c85b12;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+
+.botao-voltar-grupo {
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 16px;
+  width: 150px ;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 122, 26, 0.25);
+}
+
+.grupo-card-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grupo-card-principal h2 {
+  margin: 0;
+  font-size: 56px;
+  color: #1d140d;
+  font-family: Georgia, serif;
+}
+
+.grupo-card-principal p {
+  margin-top: 8px;
+  color: #8e7f71;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ========================================================= */
+/* CRIAR TAREFA */
+/* ========================================================= */
+
+.area-criar-tarefa-grupo {
+  background: white;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.area-criar-tarefa-grupo button {
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.form-tarefa-grupo {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-tarefa-grupo input,
+.form-tarefa-grupo select {
+  border: none;
+  background: #faf7f2;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.form-tarefa-grupo label {
+  font-weight: 800;
+  color: #1d140d;
+}
+
+/* ========================================================= */
+/* TAREFAS */
+/* ========================================================= */
+
+
+.coluna-tarefas h3 {
+  display: none;
+}
+
+.tarefa-grupo-card {
+  background: #fbf8f3;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 14px;
+  text-align: left;
+  box-shadow: none;
+}
+
+.tarefa-grupo-card strong {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.tarefa-grupo-card p {
+  margin: 0;
+  color: #8f7f70;
+}
+
+.minha-tarefa-grupo {
+  background: #dcfce7;
+  border: 1px solid #22c55e;
+}
+
+
+/* ========================================================= */
+/* MODAL */
+/* ========================================================= */
+
+.modal-tarefa-grupo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-tarefa-conteudo {
+  background: white;
+  border-radius: 28px;
+  padding: 30px;
+  width: 500px;
+  position: relative;
+}
+
+.modal-tarefa-conteudo h2 {
+  margin-top: 0;
+  font-size: 40px;
+  color: #1d140d;
+}
+
+.modal-tarefa-conteudo p {
+  margin-bottom: 10px;
+}
+
+.fechar-modal-tarefa {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.acoes-estado-tarefa {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.acoes-estado-tarefa button {
+  flex: 1;
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+/* ========================================================= */
+/* RESPONSIVO */
+/* ========================================================= */
+
+@media (max-width: 1200px) {
+  .quadro-tarefas-racunho {
+    grid-template-columns: 1fr;
+  }
+
+  .grupo-topo-racunho {
+    grid-template-columns: 1fr;
+  }
+
+  .grupo-card-principal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+/* ========================================================= */
+/* KANBAN */
+/* ========================================================= */
+
+.quadro-tarefas-kanban {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.kanban-coluna {
+  background: white;
+  border-radius: 24px;
+  padding: 18px;
+  min-height: 500px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+.kanban-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+}
+
+.kanban-topo h3 {
+  margin: 0;
+  font-size: 30px;
+  font-family: Georgia, serif;
+  color: #1d140d;
+}
+
+.kanban-topo span {
+  background: #fff0e5;
+  color: #c85b12;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.todo-topo {
+  border-bottom: 5px solid #1d140d;
+}
+
+.doing-topo {
+  border-bottom: 5px solid #2563eb;
+}
+
+.done-topo {
+  border-bottom: 5px solid #22c55e;
+}
+
+.kanban-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sem-tarefas {
+  color: #9a8b7a;
+  margin-top: 8px;
+}
+
+.tarefa-grupo-card {
+  background: #fbf8f3;
+  border-radius: 20px;
+  padding: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid transparent;
+}
+
+.tarefa-grupo-card:hover {
+  transform: translateY(-3px);
+}
+
+.tarefa-grupo-card strong {
+  display: block;
+  font-size: 22px;
+  color: #1d140d;
+  margin-bottom: 6px;
+}
+
+.tarefa-grupo-card p {
+  color: #7f7265;
+  margin-bottom: 12px;
+}
+
+.tarefa-grupo-card small {
+  color: #9b8c7c;
+}
+
+.minha-tarefa-grupo {
+  background: #dcfce7;
+  border: 2px solid #22c55e;
+}
+
+
+
+.info-grupo-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+.botao-criar-topo:hover {
+  transform: translateY(-2px);
+}
+
+
+
+
+.info-grupo-central {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acoes-topo-grupo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.botao-chat-grupo {
+  position: relative;
+  border: none;
+  background: #fff0e5;
+  color: #c85b12;
+  width: 62px;
+  height: 62px;
+  margin-right: -130px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 28px;
+  box-shadow: 0 8px 18px rgba(255, 122, 26, 0.18);
+}
+
+.botao-criar-topo {
+  border: none;
+  background: #ff7a1a;
+  color: white;
+  padding: 14px 18px;
+  
+  border-radius: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 122, 26, 0.25);
+  transition: 0.2s;
+}
+
+.botao-criar-topo:hover {
+  transform: translateY(-2px);
+}
+
+
+
+.botao-merge-topo {
+  background: #fff0e5;
+  color: #c85b12;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.lista-partes-merge {
+  margin-top: 15px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.item-parte-merge {
+  background: white;
+  border: 1px solid #eadfd2;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+}

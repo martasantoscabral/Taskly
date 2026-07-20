@@ -1,0 +1,169 @@
+paths:
+  /api/tasks:
+    get:
+      tags: [Tasks]
+      summary: Retorna a lista de todas as tarefas
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: id_user
+          required: false
+          schema:
+            type: integer
+          description: Filtra tarefas pelo id do utilizador
+
+        - in: query
+          name: status
+          required: false
+          schema:
+            type: string
+            enum: [TODO, DOING, DONE]
+          description: Filtra tarefas pelo estado
+
+        - in: query
+          name: priority
+          required: false
+          schema:
+            type: string
+            enum: [BAIXA, MEDIA, ALTA, URGENTE]
+          description: Filtra tarefas pela prioridade
+
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: Erro de validação
+
+    post:
+      tags: [Tasks]
+      summary: Cria uma nova tarefa
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, id_user]
+              properties:
+                title:
+                  type: string
+                  minLength: 3
+                  example: Fazer backend
+                description:
+                  type: string
+                  example: Implementar endpoints
+                priority:
+                  type: string
+                  enum: [BAIXA, MEDIA, ALTA, URGENTE]
+                  example: ALTA
+                status:
+                  type: string
+                  enum: [TODO, DOING, DONE]
+                  example: TODO
+                dueDate:
+                  type: string
+                  format: date-time
+                  example: 2026-04-20T00:00:00.000Z
+                id_user:
+                  type: integer
+                  example: 1
+      responses:
+        201:
+          description: Tarefa criada
+        400:
+          description: Erro de validação
+
+  /api/tasks/{id}:
+    get:
+      tags: [Tasks]
+      summary: Retorna uma tarefa pelo ID
+      security:
+       - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+        404:
+          description: Tarefa não encontrada
+
+    put:
+      tags: [Tasks]
+      summary: Atualiza uma tarefa existente
+      security:
+       - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 3
+                  example: Backend atualizado
+                description:
+                  type: string
+                  example: Endpoints completos
+                priority:
+                  type: string
+                  enum: [BAIXA, MEDIA, ALTA, URGENTE]
+                  example: URGENTE
+                status:
+                  type: string
+                  enum: [TODO, DOING, DONE]
+                  example: DOING
+                dueDate:
+                  type: string
+                  format: date-time
+                  example: 2026-04-25T00:00:00.000Z
+                id_user:
+                  type: integer
+                  example: 1
+      responses:
+        200:
+          description: Tarefa atualizada
+        400:
+          description: Erro de validação
+        404:
+          description: Tarefa não encontrada
+
+    delete:
+      tags: [Tasks]
+      summary: Remove uma tarefa existente
+      security:
+       - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        204:
+          description: Tarefa removida
+        400:
+          description: ID inválido
+        404:
+          description: Tarefa não encontrada

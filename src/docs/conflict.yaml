@@ -1,0 +1,130 @@
+paths:
+  /api/conflicts:
+    post:
+      tags: [Conflicts]
+      summary: Cria um novo conflito manualmente
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id_tarefa, nome_ficheiro, mensagem_commit, status]
+              properties:
+                id_tarefa:
+                  type: integer
+                  example: 1
+                nome_ficheiro:
+                  type: string
+                  example: utils.py
+                mensagem_commit:
+                  type: string
+                  example: Conflito inicial
+                status:
+                  type: string
+                  example: pendente
+      responses:
+        201:
+          description: Conflito criado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+
+  /api/conflicts/tarefa/{id}:
+    get:
+      tags: [Conflicts]
+      summary: Retorna todos os conflitos de uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID da tarefa inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+        500:
+          description: Erro ao listar conflitos
+
+  /api/conflicts/{id}:
+    get:
+      tags: [Conflicts]
+      summary: Retorna um conflito específico pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do conflito
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID do conflito inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Conflito não encontrado
+
+  /api/conflicts/{id}/resolve:
+    put:
+      tags: [Conflicts]
+      summary: Resolve um conflito existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do conflito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                id_versao_escolhida:
+                  type: integer
+                  nullable: true
+                  example: 3
+                status:
+                  type: string
+                  example: resolvido
+      responses:
+        200:
+          description: Conflito resolvido
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Conflito não encontrado

@@ -1,0 +1,138 @@
+paths:
+  /api/reports:
+    get:
+      tags: [Reports]
+      summary: Retorna a lista de todos os reports
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Sucesso
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        500:
+          description: Erro ao listar reports
+
+    post:
+      tags: [Reports]
+      summary: Cria um novo report
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id_reportado, tipo, status, relevancia]
+              properties:
+                id_reportado:
+                  type: integer
+                  example: 2
+                tipo:
+                  type: string
+                  minLength: 3
+                  example: spam
+                status:
+                  type: string
+                  minLength: 3
+                  example: pendente
+                relevancia:
+                  type: string
+                  minLength: 3
+                  example: alta
+      responses:
+        201:
+          description: Report criado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+
+  /api/reports/{id}:
+    get:
+      tags: [Reports]
+      summary: Retorna um report pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do report
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Report não encontrado
+
+    delete:
+      tags: [Reports]
+      summary: Remove um report existente
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do report
+      responses:
+        204:
+          description: Report removido
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Report não encontrado
+
+  /api/reports/{id}/status:
+    put:
+      tags: [Reports]
+      summary: Atualiza o status de um report
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  minLength: 3
+                  example: resolvido
+      responses:
+        200:
+          description: Status do report atualizado
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Report não encontrado

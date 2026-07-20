@@ -1,0 +1,133 @@
+paths:
+  /api/tasks/{id}/submissions:
+    get:
+      tags: [Submissions]
+      summary: Retorna a lista de submissões de uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID da tarefa inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+        500:
+          description: Erro ao listar submissões
+
+    post:
+      tags: [Submissions]
+      summary: Cria uma nova submissão para uma tarefa
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nome, nome_ficheiro, file_path]
+              properties:
+                nome:
+                  type: string
+                  minLength: 2
+                  example: Rui
+                nome_ficheiro:
+                  type: string
+                  example: utils.py
+                file_path:
+                  type: string
+                  example: /uploads/utils.py
+                mensagem_commit:
+                  type: string
+                  example: Primeira versão
+      responses:
+        201:
+          description: Submissão criada
+        400:
+          description: Dados inválidos
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa não encontrada
+
+  /api/tasks/{id}/submissions/{submissionId}:
+    get:
+      tags: [Submissions]
+      summary: Retorna uma submissão específica pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+        - in: path
+          name: submissionId
+          required: true
+          schema:
+            type: integer
+          description: ID da submissão
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa ou submissão não encontrada
+
+    delete:
+      tags: [Submissions]
+      summary: Remove uma submissão específica
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da tarefa
+        - in: path
+          name: submissionId
+          required: true
+          schema:
+            type: integer
+          description: ID da submissão
+      responses:
+        204:
+          description: Submissão removida
+        400:
+          description: ID inválido
+        401:
+          description: Não autenticado
+        403:
+          description: Não autorizado
+        404:
+          description: Tarefa ou submissão não encontrada

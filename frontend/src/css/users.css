@@ -1,0 +1,33 @@
+.users-page {
+  padding: 24px;
+}
+
+.users-page h1 {
+  margin-bottom: 8px;
+}
+
+.users-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.user-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.user-card h3 {
+  margin-bottom: 12px;
+}
+
+.user-card p {
+  margin: 6px 0;
+}
+
+.users-error {
+  color: red;
+  margin-top: 12px;
+}

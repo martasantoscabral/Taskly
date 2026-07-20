@@ -1,0 +1,38 @@
+.amigos-page {
+  padding: 24px;
+}
+
+.amigos-section {
+  margin-top: 24px;
+}
+
+.amigos-search {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.amigos-list {
+  display: grid;
+  gap: 16px;
+}
+
+.amigo-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.amigo-card h3 {
+  margin: 0 0 6px;
+}
+
+.amigo-card p {
+  margin: 4px 0;
+}
+
+

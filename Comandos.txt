@@ -29,7 +29,7 @@ frontend-react
     npm install
     npm run dev
 
-----> ver Taskly Web
+----> ver Taskly Webb
     http://localhost:5173
 
 ----> ver swagger

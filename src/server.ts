@@ -28,6 +28,8 @@ import chatRoutes from "./routes/chatRoutes.js";
 import { specs } from "./lib/swagger.js";
 
 const app = express();
+app.set("trust proxy", 1);
+
 
 /*
 |--------------------------------------------------------------------------

@@ -16,7 +16,8 @@ export default function DesafiosAdmin() {
     publicado: false,
   });
 
-  const API_DESAFIOS = "http://localhost:3000/api/challenges";
+  const BASE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_DESAFIOS = `${BASE_API_URL}/api/challenges`;
   const token = localStorage.getItem("token");
 
   async function carregarDesafios() {

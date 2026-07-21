@@ -19,7 +19,10 @@ function Feed() {
   const [desafios, setDesafios] = useState([]);
   const [associacao, setAssociacao] = useState("");
 
-  const API_FEED = "http://localhost:3000/api/feed";
+  const BASE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_FEED = `${BASE_API_URL}/api/feed`;
+  const API_TASKS = `${BASE_API_URL}/api/tasks`;
+  const API_CHALLENGES = `${BASE_API_URL}/api/challenges`;
 
   const token = localStorage.getItem("token");
 
@@ -28,14 +31,29 @@ function Feed() {
 
   // CARREGAR FEED
   async function carregarFeed() {
-    const res = await fetch(API_FEED, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      setErro("");
 
-    const data = await res.json();
-    setPosts(data);
+      const res = await fetch(API_FEED, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErro(data.error || "Não foi possível carregar o feed.");
+        setPosts([]);
+        return;
+      }
+
+      setPosts(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Erro ao carregar feed:", error);
+      setErro("Não foi possível comunicar com o servidor.");
+      setPosts([]);
+    }
   }
 
   // CARREGAR TAREFAS / SUBTASKS / DESAFIOS
@@ -48,7 +66,7 @@ function Feed() {
 
       // TAREFAS
       const resTarefas = await fetch(
-        `http://localhost:3000/api/tasks?id_user=${meuId}`,
+        `${API_TASKS}?id_user=${meuId}`,
         { headers }
       );
 
@@ -59,7 +77,7 @@ function Feed() {
 
       // DESAFIOS
       const resDesafios = await fetch(
-        `http://localhost:3000/api/challenges`,
+        API_CHALLENGES,
         { headers }
       );
 
@@ -119,6 +137,12 @@ function Feed() {
     });
 
     const data = await res.json();
+
+    if (!res.ok) {
+      setErro(data.error || "Não foi possível criar a publicação.");
+      return;
+    }
+
     setNovaPublicacao("");
     setTipoPublicacao("TAREFA");
     setAssociacao("");

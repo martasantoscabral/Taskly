@@ -2,128 +2,263 @@ import { useEffect, useState } from "react";
 import "../css/report.css";
 
 function Reports() {
-  // Guarda todos os reports vindos da API
   const [reports, setReports] = useState([]);
-  // Guarda mensagens de erro
   const [erro, setErro] = useState("");
-  // URL da API de reports
-  const API_URL = "http://localhost:3000/api/reports";
+  const [aCarregar, setACarregar] = useState(true);
+
+  const BASE_API_URL =
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:3000";
+
+  const API_REPORTS = `${BASE_API_URL}/api/reports`;
+
   const token = localStorage.getItem("token");
 
-
-  /**
-   * Carrega todos os reports do backend
-   * GET /api/reports
-  */
   async function carregarReports() {
-    const res = await fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      setACarregar(true);
+      setErro("");
 
-    // Converte resposta para JSON
-    const data = await res.json();
-    // Guarda reports no estado
-    setReports(data);
+      const res = await fetch(API_REPORTS, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErro(
+          data.error ||
+          "Não foi possível carregar os reports.",
+        );
+        setReports([]);
+        return;
+      }
+
+      setReports(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Erro ao carregar reports:", error);
+
+      setErro(
+        "Não foi possível comunicar com o servidor.",
+      );
+
+      setReports([]);
+    } finally {
+      setACarregar(false);
+    }
   }
 
-
-
-  /**
-   * Marca um report como resolvido
-   * PATCH /api/reports/:id/resolve
-  */
   async function resolverReport(id) {
-    await fetch(`${API_URL}/${id}/resolve`, {
-      method: "PATCH",
-      headers: {Authorization: `Bearer ${token}`,}
-    });
-    // Atualiza lista depois da alteração
-    carregarReports();
+    try {
+      setErro("");
+
+      const res = await fetch(
+        `${API_REPORTS}/${id}/resolve`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErro(
+          data.error ||
+          "Não foi possível resolver o report.",
+        );
+        return;
+      }
+
+      await carregarReports();
+    } catch (error) {
+      console.error("Erro ao resolver report:", error);
+
+      setErro(
+        "Não foi possível comunicar com o servidor.",
+      );
+    }
   }
 
-
-
-  /**
-   * Suspende o utilizador reportado   PATCH /api/reports/:id/suspend
-  */
   async function suspenderUtilizador(id) {
-    await fetch(`${API_URL}/${id}/suspend`, {
-      method: "PATCH",
-      headers: {Authorization: `Bearer ${token}`,},
-    });
-    // Atualiza lista depois da alteração
-    carregarReports();
+    try {
+      setErro("");
+
+      const res = await fetch(
+        `${API_REPORTS}/${id}/suspend`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErro(
+          data.error ||
+          "Não foi possível suspender o utilizador.",
+        );
+        return;
+      }
+
+      await carregarReports();
+    } catch (error) {
+      console.error(
+        "Erro ao suspender utilizador:",
+        error,
+      );
+
+      setErro(
+        "Não foi possível comunicar com o servidor.",
+      );
+    }
   }
 
-
-
-  /**
-   * Elimina a tarefa associada ao report   DELETE /api/reports/:id/task
-  */
   async function apagarTarefaReportada(id) {
-    await fetch(`${API_URL}/${id}/task`, {
-      method: "DELETE",
-      headers: {Authorization: `Bearer ${token}`,},
-    });
-    // Atualiza lista depois da alteração
-    carregarReports();
+    const confirmar = window.confirm(
+      "Tens a certeza de que queres apagar esta tarefa?",
+    );
+
+    if (!confirmar) return;
+
+    try {
+      setErro("");
+
+      const res = await fetch(
+        `${API_REPORTS}/${id}/task`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErro(
+          data.error ||
+          "Não foi possível apagar a tarefa.",
+        );
+        return;
+      }
+
+      await carregarReports();
+    } catch (error) {
+      console.error(
+        "Erro ao apagar tarefa reportada:",
+        error,
+      );
+
+      setErro(
+        "Não foi possível comunicar com o servidor.",
+      );
+    }
   }
-  
-  //Carrega os reports logo ao entrar na página
+
   useEffect(() => {
     carregarReports();
   }, []);
 
-  //pagina web
   return (
     <div className="reports-page">
-
-      {/* Título da página */}
       <h1>Reports</h1>
 
-      {/* Caso não existam reports */}
-      {reports.length === 0 ? (
-        <p>Não existem report.</p>
+      {erro && (
+        <p className="reports-error">
+          {erro}
+        </p>
+      )}
+
+      {aCarregar ? (
+        <p>A carregar reports...</p>
+      ) : reports.length === 0 ? (
+        <p>Não existem reports.</p>
       ) : (
-        // Lista de reports
         <div className="reports-list">
           {reports.map((report) => (
-            <div key={report.id_report} className="report-card">
-              {/* ID do report */}
+            <div
+              key={report.id_report}
+              className="report-card"
+            >
               <h3>Report #{report.id_report}</h3>
 
-              {/* Dados do report */}
-              <p>Tipo: {report.tipo}</p>
-              <p>Status: {report.status}</p>
-              <p>Relevância: {report.relevancia}</p>
-              <p> Reportado por: {report.reportadoPor?.nome}</p>
-              <p>Utilizador reportado: {report.reportado?.nome}</p>
+              <p>
+                <strong>Tipo:</strong> {report.tipo}
+              </p>
 
+              <p>
+                <strong>Status:</strong> {report.status}
+              </p>
 
-              {/* Caso o report tenha uma tarefa associada */}
+              <p>
+                <strong>Relevância:</strong>{" "}
+                {report.relevancia}
+              </p>
+
+              <p>
+                <strong>Reportado por:</strong>{" "}
+                {report.reportadoPor?.nome ||
+                  "Desconhecido"}
+              </p>
+
+              <p>
+                <strong>Utilizador reportado:</strong>{" "}
+                {report.reportado?.nome ||
+                  "Desconhecido"}
+              </p>
+
               {report.tarefa && (
                 <div className="report-task">
                   <strong>Tarefa reportada:</strong>
                   <p>{report.tarefa.title}</p>
-                  <small>{report.tarefa.description}</small>
+                  <small>
+                    {report.tarefa.description ||
+                      "Sem descrição."}
+                  </small>
                 </div>
               )}
 
-
-              {/* Botões de ações */}
               <div className="report-actions">
-                {/* Resolver report */}
-                <button onClick={() => resolverReport(report.id_report)}>Resolver</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    resolverReport(report.id_report)
+                  }
+                >
+                  Resolver
+                </button>
 
-                {/* Suspender utilizador */}
-                <button onClick={() => suspenderUtilizador(report.id_report)}>Suspender user</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    suspenderUtilizador(
+                      report.id_report,
+                    )
+                  }
+                >
+                  Suspender user
+                </button>
 
-                {/* Só aparece se existir tarefa */}
                 {report.id_tarefa && (
-                  <button onClick={() => apagarTarefaReportada(report.id_report)}>Apagar tarefa</button>
-
+                  <button
+                    type="button"
+                    onClick={() =>
+                      apagarTarefaReportada(
+                        report.id_report,
+                      )
+                    }
+                  >
+                    Apagar tarefa
+                  </button>
                 )}
               </div>
             </div>

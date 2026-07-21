@@ -54,7 +54,8 @@ function Tasks({ user, onLogout }) {
   const [sugestoesIA, setSugestoesIA] = useState([]);
 
 
-  const API_URL = "http://localhost:3000/api/tasks";
+  const BASE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_TASKS = `${BASE_API_URL}/api/tasks`;
   const token = localStorage.getItem("token");
 
   const [tarefaEditando, setTarefaEditando] = useState(null);
@@ -94,7 +95,7 @@ function Tasks({ user, onLogout }) {
       })),
     };
 
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_TASKS, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +138,7 @@ function Tasks({ user, onLogout }) {
   }
 
   async function carregarTarefas() {
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_TASKS, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -154,7 +155,7 @@ function Tasks({ user, onLogout }) {
   async function atualizarTarefa(id, dados) {
     const { subTasks, user, publicacoesFeed, reports, aiResponses, createdAt, ...dadosLimpos } = dados;
 
-    const res = await fetch(`${API_URL}/${id}`, {
+    const res = await fetch(`${API_TASKS}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +175,7 @@ function Tasks({ user, onLogout }) {
 
 
   async function atualizarSubTarefa(idTarefa, idSubTask, dados) {
-    const res = await fetch(`${API_URL}/${idTarefa}/subtasks/${idSubTask}`, {
+    const res = await fetch(`${API_TASKS}/${idTarefa}/subtasks/${idSubTask}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -229,7 +230,7 @@ function Tasks({ user, onLogout }) {
     for (const sub of editSubTasks) {
       // nova subtarefa
       if (sub.nova) {
-        await fetch(`${API_URL}/${tarefaEditando.id}/subtasks`, {
+        await fetch(`${API_TASKS}/${tarefaEditando.id}/subtasks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -263,7 +264,7 @@ function Tasks({ user, onLogout }) {
 
       if (!aindaExiste) {
         await fetch(
-          `${API_URL}/${tarefaEditando.id}/subtasks/${antiga.id_subtask}`,
+          `${API_TASKS}/${tarefaEditando.id}/subtasks/${antiga.id_subtask}`,
           {
             method: "DELETE",
             headers: {
@@ -330,7 +331,7 @@ function Tasks({ user, onLogout }) {
       description: descricao || "",
     });
 
-    const res = await fetch("http://localhost:3000/api/tasks/ai/subtasks", {
+    const res = await fetch(`${BASE_API_URL}/api/tasks/ai/subtasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
